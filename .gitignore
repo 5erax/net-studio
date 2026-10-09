@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*
+.sites-runtime/
+.sites-workflow/
+.sites-workflow-state.json
+*.log
