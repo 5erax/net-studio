@@ -1,5 +1,19 @@
 # Kiểm tra cuộn và parallax
 
+## Đối chiếu motion với trang gốc
+
+Đã phát hiện `intro:false` trong nội dung Nét Studio làm mất chuỗi intro của template. Đã đổi thành `intro:true` và bỏ GSAP intro/fade trang trí bổ sung. Đối chiếu 11 selector với preview tác giả: `.ctl-veil`, `.ctl-settle`, `.ctl-rise`, `.ctl-track`, `.ctl-tw0`, `.ctl-hot::before`, `.ctl-orbit`, `.ctl-bob`, `.ctl-mark`, `.ctl-panelin`, `.ctl-preview`. Tên animation, duration, easing, delay và transition khớp nguồn gốc.
+
+Kiểm tra bổ sung: đổi pha mặt trăng bằng Enter, hover preview hiện theo pointer, dấu xoay khi cuộn, footer còn `animateMotion`, reduced motion bỏ chuyển động trang trí. Không thay những animation này để đạt điểm benchmark.
+
+Đo wheel thật bằng Playwright `mouse.wheel`, 8 lần × 420 px cách nhau 350 ms, cùng Edge headless 1440 × 1000, không CPU throttling, 3 lượt mỗi trường hợp. Thời gian main thread trung bình trong cửa sổ thao tác: bản Vercel trước sửa wheel 2760 ms, thử native wheel 1554 ms, bản khôi phục intro + native wheel 1632 ms. Giữ `smoothWheel:false`: wheel có phản hồi native như bản gốc; Lenis vẫn xử lý điều hướng anchor. Kiểm tra runtime xác nhận wheel không bị preventDefault.
+
+Đã chạy cùng thao tác trên preview gốc, nhưng preview có workshop shell riêng và phép đo headless không phản ánh trải nghiệm trên máy người dùng. Không dùng kết quả đó để khẳng định bản tùy chỉnh mượt ngang hoặc hơn bản gốc. Chưa đo RUM hoặc thiết bị thật.
+
+## Phép thử stress trước đó
+
+Các số liệu dưới đây dùng pointer event nhân tạo đồng thời với `window.scrollTo` mỗi frame và CPU throttling 4×. Chúng chỉ giúp khoanh vùng chi phí style; không phải bằng chứng bản tùy chỉnh đạt độ mượt của trang gốc. Phép thử này bỏ qua khác biệt wheel của Lenis và không phát hiện intro đã bị tắt.
+
 Ngày 2026-10-09. Edge headless, viewport 1440 × 1000, CPU throttling 4×, mỗi trường hợp chạy 3 lần với thao tác pointer và cuộn trong 5 giây. Đây là phép đo tổng hợp để so sánh cùng điều kiện, không phải FPS trên điện thoại thật hoặc Core Web Vitals thực tế.
 
 | Trường hợp | Khoảng cách frame trung bình | Tổng thời gian tính lại style | Số frame trong lượt đo |

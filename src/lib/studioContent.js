@@ -9,7 +9,7 @@ export const articles = [
 ];
 
 export const studioContent = {
-  brand: 'Nét Studio', monogram: 'N', theme: 'light', palette: 'cobalt', paletteSwitcher: false, intro: false,
+  brand: 'Nét Studio', monogram: 'N', theme: 'light', palette: 'cobalt', paletteSwitcher: false, intro: true,
   nav: [{ label: 'Về Nét', href: '#about' }, { label: 'Chuyên môn', href: '#solutions' }, { label: 'Dịch vụ', href: '#services' }, { label: 'Dự án', href: '#insights' }],
   cta: { label: 'Bắt đầu dự án', href: '#brief' },
   hero: { title: 'Ý tưởng tinh tế\nDấu ấn bền lâu', subtitle: 'Thiết kế thương hiệu, website và minh họa — từ câu chuyện của bạn đến một ngôn ngữ riêng.', action: { label: 'Khám phá Nét', href: '#solutions' }, est: 'Concept · 2026', edition: 'Nét Studio — Nº 01' },

@@ -27,8 +27,9 @@ Build tĩnh nằm trong `dist/`. Có thể đưa lên hosting hỗ trợ website
 
 ## Thư viện được dùng thực tế
 
-- **Lenis**: cuộn mượt và điều hướng anchor, kết nối cùng GSAP ticker.
-- **GSAP + ScrollTrigger**: animation mở đầu, reveal brief, fade minh họa studio và thanh tiến độ đọc trang. Mỗi effect có cleanup, an toàn với React StrictMode. Các hiệu ứng reveal và tương tác gốc của template được giữ lại.
+- **Lenis**: điều hướng anchor có chuyển động, kết nối cùng GSAP ticker. Wheel dùng cuộn native như template gốc (`smoothWheel:false`).
+- **GSAP + ScrollTrigger**: reveal brief và thanh tiến độ đọc trang. Mỗi effect có cleanup, an toàn với React StrictMode.
+- **Motion gốc**: bật `intro:true` để giữ hiệu ứng mở tranh từ tâm, bốn lớp minh họa settle và chữ xuất hiện theo nhịp. Giữ reveal khi cuộn, parallax, sao nhấp nháy, dấu xoay, dấu trang, hover preview, hotspot và footer SVG chuyển động. GSAP không điều khiển lại những phần template đã có animation.
 - **React Bits**: component **Magnet** lấy từ repository chính thức, nằm trong `src/components/react-bits/`. React Bits phát hành source component để tích hợp vào project; không có package `react-bits` cần cài ở đây.
 
 Giao diện tự dùng cuộn native và bỏ chuyển động trang trí khi thiết bị bật `prefers-reduced-motion`. Magnet chỉ hoạt động khi có chuột hoặc con trỏ chính xác.
@@ -70,6 +71,7 @@ Xem `THIRD_PARTY_NOTICES.md` và các giấy phép đi kèm. React Bits có MIT 
 - Build production thành công.
 - 3 bài `node:test`: lọc danh mục, tạo brief tiếng Việt, từ chối dữ liệu không hợp lệ.
 - Edge headless: render template, không tràn ngang ở 320 / 768 / 1024 / 1440px; dấu trang và bàn phím; bộ lọc; xem tất cả; hộp thoại/Escape/trả focus; dịch vụ; hotspot; tải brief và ghi chú; menu điện thoại; cuộn Lenis; reduced motion; console và network sạch.
+- Đối chiếu trực tiếp 11 bộ thông số motion với preview tác giả: animation name, duration, easing, delay và transition. Kiểm tra moon bằng bàn phím, wheel không bị preventDefault, hover preview, dấu xoay và animateMotion trong footer.
 - Chưa kiểm tra trên Safari hoặc thiết bị cảm ứng thật.
 
 ## GitHub và deploy
