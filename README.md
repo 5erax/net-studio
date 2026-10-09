@@ -75,11 +75,13 @@ Xem `THIRD_PARTY_NOTICES.md` và các giấy phép đi kèm. React Bits có MIT 
 ## GitHub và deploy
 
 - Repository: https://github.com/5erax/net-studio
-- Website: https://5erax.github.io/net-studio/
-- Workflow: `.github/workflows/deploy.yml`, chạy test và build trên pull request; tự deploy sau khi push vào `main`. Có thể chạy lại từ tab Actions bằng **Run workflow**.
+- Website chính: https://net-studio-nu.vercel.app/
+- Vercel project `net-studio`, workspace `DHa's projects`, liên kết repo `5erax/net-studio`, production branch `main`. Tự deploy production khi push `main`, preview cho các nhánh khác.
+- Workflow `.github/workflows/deploy.yml` chạy test và build trên GitHub. Deploy do tích hợp Git của Vercel thực hiện; `vercel.json` yêu cầu test đạt trước khi build.
 - Node 24, cài bằng `npm ci`, build tĩnh vào `dist`. Không cần API key, database hoặc secret tự tạo.
-- Workflow đặt `VITE_BASE_PATH=/net-studio/` để tài nguyên hoạt động trên GitHub Pages. Chạy local mặc định dùng `/`. Khi đổi tên repo hoặc hosting, cập nhật giá trị này.
+- Vercel và local dùng `/`. Có thể đặt `VITE_BASE_PATH=/net-studio/` nếu cần build lại cho GitHub Pages. Bản Pages cũ không còn được cập nhật tự động.
 - Repo công khai. Giữ giấy phép thư viện và thông tin tác giả template trong `THIRD_PARTY_NOTICES.md`.
-- Quay lại một bản trước: dùng `git revert <commit>` rồi push `main`; workflow sẽ kiểm tra và deploy lại. Không cần force-push.
+- Quyền xem production và preview được quản lý trong Deployment Protection của project Vercel. Không đưa `.vercel/` hoặc thông tin xác thực vào Git.
+- Quay lại một bản trước: dùng `git revert <commit>` rồi push `main`; Vercel sẽ kiểm tra và deploy lại. Không cần force-push. Hoặc chọn bản production trước trong dashboard Vercel và dùng rollback.
 
-Cấu hình theo hướng dẫn chính thức của [Vite](https://vite.dev/guide/static-deploy.html#github-pages) và [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Cấu hình theo hướng dẫn chính thức của [Vite trên Vercel](https://vercel.com/docs/frameworks/frontend/vite) và [Vercel GitHub](https://vercel.com/docs/git/vercel-for-github). Các phép đo tối ưu SVG/parallax nằm trong `PERF.md`; chưa có dữ liệu hiệu năng trên thiết bị thật.

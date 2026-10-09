@@ -6,4 +6,5 @@ dist/
 .sites-workflow/
 .sites-workflow-state.json
 .openai/
+.vercel/
 *.log

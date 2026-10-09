@@ -3482,6 +3482,7 @@ function es({ copy: e, intro: a, reduced: s, go: r, mark: l }) {
   u.useEffect(() => {
     const h = c.current;
     if (!h || s || !window.matchMedia("(pointer: fine)").matches) return;
+    const layers = [...h.querySelectorAll('[style]')].filter(node => node.style.transform.includes('--mx'));
     let p = 0,
       f = 0,
       g = 0,
@@ -3490,8 +3491,10 @@ function es({ copy: e, intro: a, reduced: s, go: r, mark: l }) {
     const y = () => {
         ((g += (p - g) * 0.07),
           (v += (f - v) * 0.07),
-          h.style.setProperty("--mx", g.toFixed(4)),
-          h.style.setProperty("--my", v.toFixed(4)),
+          layers.forEach(node => {
+            node.style.setProperty("--mx", g.toFixed(4));
+            node.style.setProperty("--my", v.toFixed(4));
+          }),
           (j =
             Math.abs(p - g) + Math.abs(f - v) > 8e-4
               ? requestAnimationFrame(y)
@@ -3516,8 +3519,10 @@ function es({ copy: e, intro: a, reduced: s, go: r, mark: l }) {
         (h.removeEventListener("pointermove", L),
           h.removeEventListener("pointerleave", F),
           cancelAnimationFrame(j),
-          h.style.removeProperty("--mx"),
-          h.style.removeProperty("--my"));
+          layers.forEach(node => {
+            node.style.removeProperty("--mx");
+            node.style.removeProperty("--my");
+          }));
       }
     );
   }, [s]);
@@ -4475,6 +4480,7 @@ function ps({ notes: e, reduced: a, id: s }) {
     u.useEffect(() => {
       const p = l.current;
       if (!p || a) return;
+      const layers = [...p.querySelectorAll('[style]')].filter(node => node.style.transform.includes('--tp'));
       let f = 0;
       const g = () => {
         f ||
@@ -4487,7 +4493,7 @@ function ps({ notes: e, reduced: a, id: s }) {
                 -1,
                 1,
               );
-            p.style.setProperty("--tp", j.toFixed(4));
+            layers.forEach(node => node.style.setProperty("--tp", j.toFixed(4)));
           }));
       };
       return (
