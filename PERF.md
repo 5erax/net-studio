@@ -1,5 +1,9 @@
 # Kiểm tra cuộn và parallax
 
+## Font — 1.1.0
+
+Năm file font trước đây là TrueType dù có phần mở rộng `.woff2`. Đã chuyển thành WOFF2 chuẩn, tổng dung lượng giảm từ 1.12 MB xuống 267 KB. Kiểm tra cmap xác nhận toàn bộ chữ có dấu tiếng Việt vẫn có trong cả năm file. Template đã nối với các web font này thay vì ưu tiên font hệ thống. Đây là giảm dung lượng tài nguyên font, không phải phép đo tốc độ toàn trang hoặc độ mượt trên thiết bị thật.
+
 ## Đối chiếu motion với trang gốc
 
 Đã phát hiện `intro:false` trong nội dung Nét Studio làm mất chuỗi intro của template. Đã đổi thành `intro:true` và bỏ GSAP intro/fade trang trí bổ sung. Đối chiếu 11 selector với preview tác giả: `.ctl-veil`, `.ctl-settle`, `.ctl-rise`, `.ctl-track`, `.ctl-tw0`, `.ctl-hot::before`, `.ctl-orbit`, `.ctl-bob`, `.ctl-mark`, `.ctl-panelin`, `.ctl-preview`. Tên animation, duration, easing, delay và transition khớp nguồn gốc.

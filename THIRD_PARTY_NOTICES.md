@@ -5,5 +5,5 @@
 - **Lenis**: https://github.com/darkroomengineering/lenis — MIT, bundled package license in `node_modules/lenis/LICENSE`.
 - **GSAP**: https://gsap.com/ — see the installed package license and https://gsap.com/community/standard-license/.
 - **React / React DOM / Vite**: licenses included in their npm packages.
-- **Be Vietnam Pro / Cormorant Garamond**: self-hosted Google Fonts. SIL Open Font License files are included in `public/fonts/`.
+- **Be Vietnam Pro / Cormorant Garamond**: self-hosted Google Fonts. Full Vietnamese glyph coverage is retained; the font files have been compressed from TrueType to WOFF2 without changing glyphs. SIL Open Font License files are included in `public/fonts/`.
 - **New studio illustrations**: original SVG additions in `src/components/template/StudioIllustrations.jsx`; concept project images in `public/images/`. The surrounding engraved artwork belongs to the template above.

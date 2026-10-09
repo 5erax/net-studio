@@ -3,6 +3,7 @@
 import * as u from "react";
 import * as t from "react/jsx-runtime";
 import StudioIllustration from './StudioIllustrations.jsx';
+import { interfaceCopy } from '../../lib/interfaceCopy.js';
 const xt = {
     cobalt: { label: "Cobalt", ink: "#2238c4", paper: "#f7f4ec" },
     indigo: { label: "Indigo", ink: "#2e2b72", paper: "#efe9de" },
@@ -756,7 +757,8 @@ Built for Tomorrow`,
 @media (max-width:560px){.ctl-fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.ctl-fbar{justify-content:flex-start}}
 @media (prefers-reduced-motion:reduce){.ctl-track,.ctl-tw0,.ctl-tw1,.ctl-tw2,.ctl-shoot,.ctl-veil,.ctl-settle,.ctl-rise,.ctl-cue i,.ctl-hot::before,.ctl-flap,.ctl-bob,.ctl-orbit,.ctl-pr,.ctl-panelin,.ctl-pop,.ctl-menu,.ctl-sealed svg{animation:none!important}.ctl-rv,.ctl-mark,.ctl-fold,.ctl-shade,.ctl-btn,.ctl-btn::before,.ctl-rowt,.ctl-plus{transition:none!important}.ctl-pre{opacity:1;transform:none}}
 `,
-  I = u.createContext({ uid: "", reduced: !1 });
+  I = u.createContext({ uid: "", reduced: !1, ui: interfaceCopy.vi });
+function useLabels() { return u.useContext(I).ui; }
 function H() {
   const { uid: e } = u.useContext(I);
   return (a, s) => "url(#" + e + "-" + a + s + ")";
@@ -1498,14 +1500,14 @@ function Oe() {
 }
 function Vt({ x: e, y: a, r: s, side: r, phase: l, onCycle: c }) {
   const n = H(),
-    { uid: i } = u.useContext(I),
+    { uid: i, ui } = u.useContext(I),
     d = i + "-moon" + (r > 0 ? "l" : "r"),
     x = Rt[l] * s * r;
   return t.jsxs("g", {
     className: "ctl-moon",
     role: "button",
     tabIndex: 0,
-    "aria-label": "Moon, " + de[l] + ". Press to change its phase",
+    "aria-label": ui.moon + ", " + ui.moonPhases[l] + ". " + ui.moonHint,
     onClick: c,
     onKeyDown: (m) => {
       (m.key === "Enter" || m.key === " ") && (m.preventDefault(), c());
@@ -3475,6 +3477,7 @@ function lt({ text: e }) {
 }
 const Bt = typeof window < "u" ? u.useLayoutEffect : u.useEffect;
 function es({ copy: e, intro: a, reduced: s, go: r, mark: l }) {
+  const ui = useLabels();
   const c = u.useRef(null),
     [n, i] = u.useState([0, 0]),
     d = e.title.split(`
@@ -3531,7 +3534,7 @@ function es({ copy: e, intro: a, reduced: s, go: r, mark: l }) {
     m = (h) => ({ animationDelay: h + "s" });
   return t.jsx("section", {
     className: "ctl-hero",
-    "aria-label": "Giới thiệu Nét Studio",
+    "aria-label": ui.heroLabel,
     children: t.jsxs("div", {
       ref: c,
       className: "ctl-stage" + (a && !s ? " ctl-intro" : ""),
@@ -3907,6 +3910,7 @@ function is({ art: e, t: a, brand: s, letter: r }) {
         : t.jsx(Ye, { t: a });
 }
 function ns({ copy: e, items: a, brand: s, letter: r, id: l, go: c }) {
+  const ui = useLabels();
   var p, f;
   const [n, i] = u.useState(0),
     d = u.useRef([]),
@@ -4025,7 +4029,7 @@ function ns({ copy: e, items: a, brand: s, letter: r, id: l, go: c }) {
             t.jsx("div", {
               className: "ctl-marks",
               role: "tablist",
-              "aria-label": e.kicker + " bookmarks",
+              "aria-label": e.kicker + " " + ui.bookmarks,
               children: a.map((g, v) => {
                 const j = g.art ?? Wt[v % Wt.length],
                   y =
@@ -4118,6 +4122,7 @@ function ns({ copy: e, items: a, brand: s, letter: r, id: l, go: c }) {
   });
 }
 function cs({ copy: e, items: a, id: s }) {
+  const ui = useLabels();
   const [r, l] = u.useState(0);
   return t.jsx("section", {
     className: "ctl-sec",
@@ -4206,7 +4211,7 @@ function cs({ copy: e, items: a, id: s }) {
                           c.deliverables && c.deliverables.length > 0
                             ? t.jsx("ul", {
                                 className: "ctl-dl",
-                                "aria-label": "Hạng mục bàn giao",
+                                "aria-label": ui.deliverables,
                                 children: c.deliverables.map((d, x) =>
                                   t.jsx("li", { children: d }, x),
                                 ),
@@ -4227,6 +4232,7 @@ function cs({ copy: e, items: a, id: s }) {
   });
 }
 function os({ copy: e, items: a, id: s, reduced: r }) {
+  const ui = useLabels();
   const [l, c] = u.useState(null),
     [n, i] = u.useState(!1),
     [d, x] = u.useState(null),
@@ -4238,6 +4244,7 @@ function os({ copy: e, items: a, id: s, reduced: r }) {
   u.useEffect(() => {
     g.current = window.matchMedia("(pointer: fine)").matches && !r;
   }, [r]);
+  u.useEffect(() => { c(null); i(false); x(null); }, [ui]);
   const v = (y) => {
       const k = m.current;
       if (!k || !g.current) return;
@@ -4277,14 +4284,14 @@ function os({ copy: e, items: a, id: s, reduced: r }) {
                 t.jsxs("div", {
                   className: "ctl-chips",
                   role: "group",
-                  "aria-label": "Lọc dự án và ghi chú",
+                  "aria-label": ui.filter,
                   children: [
                     t.jsxs("button", {
                       type: "button",
                       className: "ctl-chip",
                       "aria-pressed": l === null,
                       onClick: () => c(null),
-                      children: ["Tất cả", t.jsx("sup", { children: a.length })],
+                      children: [ui.all, t.jsx("sup", { children: a.length })],
                     }),
                     h.map((y) =>
                       t.jsxs(
@@ -4391,7 +4398,7 @@ function os({ copy: e, items: a, id: s, reduced: r }) {
                 onClick: () => i((y) => !y),
                 "aria-expanded": n,
                 children: t.jsx("span", {
-                  children: n ? "Thu gọn" : "Xem tất cả " + p.length,
+                  children: n ? ui.collapse : ui.showAll + " " + p.length,
                 }),
               }),
             }),
@@ -4426,6 +4433,7 @@ const ds = [
   { x: 82.4, y: 44, d: 0.4 },
 ];
 function ps({ notes: e, reduced: a, id: s }) {
+  const ui = useLabels();
   const r = H(),
     l = u.useRef(null),
     [c, n] = u.useState(null),
@@ -4536,7 +4544,7 @@ function ps({ notes: e, reduced: a, id: s }) {
     ];
   return t.jsx("div", {
     className: "ctl-toile",
-    "aria-label": "Vườn sáng tạo: bàn thiết kế, bút ngòi, website và giá vẽ",
+    "aria-label": ui.studioArt,
     role: "group",
     children: t.jsxs("div", {
       ref: l,
@@ -4702,6 +4710,7 @@ function ps({ notes: e, reduced: a, id: s }) {
   });
 }
 function hs({ copy: e, notes: a, id: s, go: r }) {
+  const ui = useLabels();
   const l = u.useMemo(() => vt(21, 70, 0, 0, 1400, 600), []);
   return t.jsxs("section", {
     className: "ctl-cta",
@@ -4759,7 +4768,7 @@ function hs({ copy: e, notes: a, id: s, go: r }) {
                 children: [
                   t.jsx("span", {
                     className: "ctl-kicker",
-                    children: "Liên hệ",
+                    children: ui.contact,
                   }),
                   t.jsx("h2", {
                     className: "ctl-ctat",
@@ -4970,22 +4979,24 @@ function ms({
   go: g,
   top: v,
 }) {
+  const ui = useLabels();
   const [j, y] = u.useState(""),
     [k, L] = u.useState("idle"),
     [F, V] = u.useState(""),
     Z = u.useId(),
     it = async (M) => {
       if ((M.preventDefault(), !me(j))) {
-        (L("error"), V("Vui lòng kiểm tra địa chỉ email."));
+        (L("error"), V(ui.invalidEmail));
         return;
       }
       (L("busy"), V(""));
       try {
         (await (p == null ? void 0 : p(j.trim())), L("done"));
       } catch {
-        (L("error"), V("Không thể tạo ghi chú. Vui lòng kiểm tra email và thử lại."));
+        (L("error"), V(ui.noteError));
       }
     };
+  u.useEffect(() => { L("idle"); V(""); }, [ui]);
   return t.jsxs("footer", {
     className: "ctl-foot",
     children: [
@@ -5109,7 +5120,7 @@ function ms({
                         t.jsx("label", {
                           htmlFor: Z,
                           className: "ctl-sr",
-                          children: "Email nhận ghi chú",
+                          children: ui.noteEmail,
                         }),
                         t.jsxs("div", {
                           className: "ctl-news",
@@ -5130,7 +5141,7 @@ function ms({
                             }),
                             t.jsx("button", {
                               type: "submit",
-                              "aria-label": "Tải ghi chú",
+                              "aria-label": ui.downloadNote,
                               disabled: k === "busy",
                               children: t.jsx(S, { name: "arrow", size: 20 }),
                             }),
@@ -5182,9 +5193,9 @@ function ms({
                 t.jsxs("div", {
                   className: "ctl-swatches",
                   role: "radiogroup",
-                  "aria-label": "Printed in",
+                  "aria-label": ui.printedIn,
                   children: [
-                    t.jsx("span", { children: "Printed in" }),
+                    t.jsx("span", { children: ui.printedIn }),
                     oe.map((M) => {
                       const T = xt[M];
                       return t.jsx(
@@ -5193,11 +5204,19 @@ function ms({
                           type: "button",
                           role: "radio",
                           "aria-checked": x === M,
+                          tabIndex: x === M ? 0 : -1,
                           "aria-label": T.label,
                           title: T.label,
                           className: "ctl-swatch",
                           style: { background: T.ink },
                           onClick: () => m(M),
+                          onKeyDown: event => {
+                            const next = ve(oe.indexOf(M), event.key, oe.length);
+                            if (next !== null) {
+                              event.preventDefault(); m(oe[next]);
+                              event.currentTarget.parentElement.querySelectorAll('[role="radio"]')[next]?.focus();
+                            }
+                          },
                         },
                         M,
                       );
@@ -5222,7 +5241,7 @@ function ms({
                     type: "button",
                     className: "ctl-top",
                     onClick: v,
-                    children: [t.jsx(S, { name: "arrow", size: 14 }), "Về đầu trang"],
+                    children: [t.jsx(S, { name: "arrow", size: 14 }), ui.backTop],
                   }),
                 ],
               }),
@@ -5276,6 +5295,10 @@ function us({
   onSubscribe: Dt,
   contactContent,
   navigate,
+  ui = interfaceCopy.vi,
+  locale = 'vi',
+  headerControls,
+  onPaletteChange,
   height: Ut = "100svh",
   className: _t = "",
 }) {
@@ -5294,7 +5317,7 @@ function us({
     ae = { ...Ze, ...j },
     re = { ...ze, ...y },
     le = { ...Ee, ...F },
-    kt = dt ? Ht(dt) : Ht(M, T, U),
+    kt = onPaletteChange ? Ht(M, T, U) : dt ? Ht(dt) : Ht(M, T, U),
     ie = (a || e.trim().charAt(0) || "H").charAt(0),
     wt = s ?? t.jsx(Tt, {}),
     D = (b) => ot + "-" + b;
@@ -5407,12 +5430,14 @@ function us({
     ref: Q,
     className: "ctl-root " + _t,
     "data-theme": nt,
+    "data-palette": onPaletteChange ? M : dt ?? M,
+    lang: locale,
     style: ce,
     children: [
       t.jsx("style", { children: Re }),
       t.jsx(Pe, { uid: ot }),
       t.jsxs(I.Provider, {
-        value: { uid: ot, reduced: R },
+        value: { uid: ot, reduced: R, ui },
         children: [
           t.jsxs("header", {
             className: "ctl-nav",
@@ -5425,12 +5450,12 @@ function us({
                     className: "ctl-brand",
                     href: "#top",
                     onClick: (b) => B("#top", b),
-                    "aria-label": e + ", back to top",
+                    "aria-label": e + ", " + ui.backTop,
                     children: [wt, t.jsx("span", { children: e })],
                   }),
                   t.jsx("nav", {
                     className: "ctl-links",
-                    "aria-label": "Điều hướng chính",
+                    "aria-label": ui.mainNav,
                     children: r.map((b, N) =>
                       t.jsx(
                         "a",
@@ -5455,12 +5480,13 @@ function us({
                       onClick: (b) => B(l.href, b),
                       children: t.jsx("span", { children: l.label }),
                     }),
+                  headerControls,
                   t.jsx("button", {
                     type: "button",
                     className: "ctl-burger",
                     "aria-expanded": X,
                     "aria-controls": D("menu"),
-                    "aria-label": X ? "Đóng menu" : "Mở menu",
+                    "aria-label": X ? ui.closeMenu : ui.openMenu,
                     onClick: () => tt((b) => !b),
                     children: t.jsx(S, {
                       name: X ? "close" : "menu",
@@ -5475,7 +5501,7 @@ function us({
                   id: D("menu"),
                   children: t.jsxs("nav", {
                     className: "ctl-wrap",
-                    "aria-label": "Điều hướng trên điện thoại",
+                    "aria-label": ui.mobileNav,
                     children: [
                       r.map((b, N) =>
                         t.jsxs(
@@ -5545,8 +5571,8 @@ function us({
             socials: V,
             legal: Z,
             copyright: it ?? "© " + ne + " " + e + " All rights reserved.",
-            pal: dt ?? M,
-            setPal: Xt,
+            pal: onPaletteChange ? M : dt ?? M,
+            setPal: onPaletteChange ?? Xt,
             switcher: ct,
             onSubscribe: Dt,
             reduced: R,
@@ -5558,4 +5584,4 @@ function us({
     ],
   });
 }
-export { us as C, Tt as EngravedMark };
+export { us as C, Tt as EngravedMark, xt as palettes };

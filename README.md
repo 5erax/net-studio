@@ -36,7 +36,9 @@ Giao diện tự dùng cuộn native và bỏ chuyển động trang trí khi th
 
 ## Chức năng
 
-- Landing page responsive bằng tiếng Việt.
+- Landing page responsive bằng tiếng Việt và tiếng Anh; chuyển VI/EN trên thanh đầu trang. Dịch cả nội dung, menu, popup, form, thông báo lỗi và tệp tải xuống.
+- Bốn bảng màu gốc Cobalt / Indigo / Delft / Oxblood, đổi từ thanh đầu trang hoặc footer. Màu đồng bộ cả minh họa, form, popup và thanh tiến độ.
+- Trình duyệt nhớ ngôn ngữ và bảng màu bằng localStorage; không lưu dữ liệu form.
 - Bốn dấu trang chuyên môn, hỗ trợ phím mũi tên.
 - Bảy dự án/ghi chú, lọc theo lĩnh vực và nút xem tất cả/thu gọn.
 - Chi tiết dự án và thông tin bằng `<dialog>` native, hỗ trợ Escape và trả focus về liên kết đã mở.
@@ -49,11 +51,12 @@ Giao diện tự dùng cuộn native và bỏ chuyển động trang trí khi th
 
 ## Tùy chỉnh
 
-- Thương hiệu, nội dung, dự án/ghi chú, hotspot: `src/lib/studioContent.js`.
+- Nội dung Việt/Anh, dự án/ghi chú và hotspot: `src/lib/studioContent.js` (`contentByLocale`).
+- Chữ giao diện, bản dịch thông báo, quyền riêng tư: `src/lib/interfaceCopy.js`.
 - Dự án concept, danh mục và kiểm tra form: `src/lib/content.js`.
 - Template đầy đủ, CSS gốc và SVG: `src/components/template/CobaltToileLanding.jsx`.
 - Minh họa studio thay thế: `src/components/template/StudioIllustrations.jsx`.
-- Kết nối template, dialog, tải ghi chú: `src/App.jsx`.
+- Kết nối template, dialog, ngôn ngữ, màu sắc và tải ghi chú: `src/App.jsx`.
 - CSS bổ sung cho brief, dialog và responsive: `src/styles.css`.
 - Animation, tích hợp Lenis/GSAP: `src/hooks/useStudioMotion.js`.
 - Minh họa: `public/images/`.
@@ -69,10 +72,15 @@ Xem `THIRD_PARTY_NOTICES.md` và các giấy phép đi kèm. React Bits có MIT 
 ## Kiểm tra đã thực hiện
 
 - Build production thành công.
-- 3 bài `node:test`: lọc danh mục, tạo brief tiếng Việt, từ chối dữ liệu không hợp lệ.
+- 5 bài `node:test`: lọc danh mục, brief tiếng Việt, từ chối dữ liệu không hợp lệ, brief tiếng Anh và kiểm tra các liên kết/ID giữ nguyên giữa hai ngôn ngữ.
 - Edge headless: render template, không tràn ngang ở 320 / 768 / 1024 / 1440px; dấu trang và bàn phím; bộ lọc; xem tất cả; hộp thoại/Escape/trả focus; dịch vụ; hotspot; tải brief và ghi chú; menu điện thoại; cuộn Lenis; reduced motion; console và network sạch.
 - Đối chiếu trực tiếp 11 bộ thông số motion với preview tác giả: animation name, duration, easing, delay và transition. Kiểm tra moon bằng bàn phím, wheel không bị preventDefault, hover preview, dấu xoay và animateMotion trong footer.
+- Bản 1.1.0: font thực tế qua Chrome DevTools (không fallback ở hero tiếng Việt); cả VI/EN tại 320 / 390 / 768 / 1024 / 1440px; palette đồng bộ và lưu lựa chọn; đổi ngôn ngữ không mất dữ liệu form; brief/ghi chú tiếng Anh; menu và hộp thoại bằng bàn phím.
 - Chưa kiểm tra trên Safari hoặc thiết bị cảm ứng thật.
+
+## Font và lựa chọn giao diện
+
+Template dùng trực tiếp Be Vietnam Pro cho chữ nội dung và Cormorant Garamond cho chữ serif. Năm file font được nén thành WOFF2 đúng định dạng, giữ đầy đủ chữ có dấu tiếng Việt, tải từ project và không gọi Google Fonts khi mở trang. Không còn ưu tiên font hệ thống có thể làm dấu bị lệch. Các biến màu ở `App.jsx` và template dùng cùng một palette; ảnh của các dự án concept giữ màu thiết kế của từng dự án.
 
 ## GitHub và deploy
 
