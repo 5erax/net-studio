@@ -5,4 +5,5 @@ dist/
 .sites-runtime/
 .sites-workflow/
 .sites-workflow-state.json
+.openai/
 *.log

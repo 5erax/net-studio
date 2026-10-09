@@ -59,7 +59,7 @@ Giao diện tự dùng cuộn native và bỏ chuyển động trang trí khi th
 
 ## Giới hạn
 
-Đây là frontend demo, chưa có backend, tài khoản hoặc xử lý thanh toán. Nội dung portfolio đều là **concept**, không phải dự án khách hàng thực. Hai form chỉ tải tệp về thiết bị, không gửi email và không lưu lên máy chủ. Project chưa được xuất bản lên hosting.
+Đây là frontend demo, chưa có backend, tài khoản hoặc xử lý thanh toán. Nội dung portfolio đều là **concept**, không phải dự án khách hàng thực. Hai form chỉ tải tệp về thiết bị, không gửi email và không lưu lên máy chủ.
 
 Muốn tiếp nhận yêu cầu thật, kết nối form với API hoặc dịch vụ form, xác thực đầu vào ở server và chỉ hiển thị thành công khi API xác nhận.
 
@@ -71,3 +71,15 @@ Xem `THIRD_PARTY_NOTICES.md` và các giấy phép đi kèm. React Bits có MIT 
 - 3 bài `node:test`: lọc danh mục, tạo brief tiếng Việt, từ chối dữ liệu không hợp lệ.
 - Edge headless: render template, không tràn ngang ở 320 / 768 / 1024 / 1440px; dấu trang và bàn phím; bộ lọc; xem tất cả; hộp thoại/Escape/trả focus; dịch vụ; hotspot; tải brief và ghi chú; menu điện thoại; cuộn Lenis; reduced motion; console và network sạch.
 - Chưa kiểm tra trên Safari hoặc thiết bị cảm ứng thật.
+
+## GitHub và deploy
+
+- Repository: https://github.com/5erax/net-studio
+- Website: https://5erax.github.io/net-studio/
+- Workflow: `.github/workflows/deploy.yml`, chạy test và build trên pull request; tự deploy sau khi push vào `main`. Có thể chạy lại từ tab Actions bằng **Run workflow**.
+- Node 24, cài bằng `npm ci`, build tĩnh vào `dist`. Không cần API key, database hoặc secret tự tạo.
+- Workflow đặt `VITE_BASE_PATH=/net-studio/` để tài nguyên hoạt động trên GitHub Pages. Chạy local mặc định dùng `/`. Khi đổi tên repo hoặc hosting, cập nhật giá trị này.
+- Repo công khai. Giữ giấy phép thư viện và thông tin tác giả template trong `THIRD_PARTY_NOTICES.md`.
+- Quay lại một bản trước: dùng `git revert <commit>` rồi push `main`; workflow sẽ kiểm tra và deploy lại. Không cần force-push.
+
+Cấu hình theo hướng dẫn chính thức của [Vite](https://vite.dev/guide/static-deploy.html#github-pages) và [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
