@@ -1,50 +1,52 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { C as CobaltToileLanding, EngravedMark } from './components/template/CobaltToileLanding.jsx';
 import Magnet from './components/react-bits/Magnet.jsx';
-import Portfolio from './components/Portfolio.jsx';
 import BriefForm from './components/BriefForm.jsx';
+import ContentDialog from './components/ContentDialog.jsx';
 import { useStudioMotion } from './hooks/useStudioMotion.js';
+import { articles, studioContent } from './lib/studioContent.js';
+import { createBrief } from './lib/content.js';
 
-const services = [
-  ['01', 'Nhận diện thương hiệu', 'Từ bản sắc đến hình hài.', 'Logo, màu sắc, typography, bao bì và những chi tiết khiến thương hiệu được nhớ đến.'],
-  ['02', 'Thiết kế website', 'Một trải nghiệm có chủ đích.', 'Website giới thiệu, portfolio và giao diện sản phẩm với nội dung rõ ràng, chuyển động vừa đủ.'],
-  ['03', 'Minh họa & ấn phẩm', 'Câu chuyện kể bằng đường nét.', 'Minh họa chủ đạo, họa tiết và ấn phẩm mang ngôn ngữ riêng của thương hiệu.'],
-];
+const information = {
+  privacy: { title: 'Quyền riêng tư', body: 'Project này không có backend, analytics hoặc tài khoản. Form brief và form ghi chú tạo tệp ngay trên thiết bị của bạn, không gửi tên, email hoặc nội dung đến máy chủ. Bạn có thể kiểm tra và chỉnh sửa tệp trước khi chia sẻ.' },
+  demo: { title: 'Thông tin bản demo', body: 'Nét Studio là thương hiệu concept. Các dự án là ví dụ thiết kế, không phải lời xác nhận về khách hàng thực. Giao diện nền được tùy chỉnh từ Engraved Illustration Landing Page Template của Kedhareswer Naidu; minh họa studio trong dải cuối trang được vẽ thêm cho project này.' },
+};
 
 export default function App() {
   const root = useRef(null);
-  const magnetEnabled = useStudioMotion(root);
+  const trigger = useRef(null);
+  const [entry, setEntry] = useState(null);
+  const { magnetEnabled, navigate } = useStudioMotion(root);
 
-  return <div ref={root}>
-    <a className="skip-link" href="#noi-dung">Đến nội dung chính</a>
-    <div className="reading-progress" aria-hidden="true" />
-    <header className="site-header section-wrap">
-      <a href="#noi-dung" className="wordmark" aria-label="Nét Studio — trang đầu">nét<span aria-hidden="true">✳</span><small>STUDIO</small></a>
-      <nav aria-label="Điều hướng chính"><a href="#du-an">Dự án</a><a href="#ve-net">Về Nét</a><a href="#dich-vu">Dịch vụ</a></nav>
-      <a className="header-contact" href="#lien-he">Cùng tạo dấu ấn <span aria-hidden="true">↗</span></a>
-    </header>
-    <main id="noi-dung" tabIndex="-1">
-      <section className="hero section-wrap" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <p className="eyebrow" data-hero><span className="tiny-star" aria-hidden="true">✳</span> Thiết kế từ những điều tinh tế</p>
-          <h1 id="hero-title" data-hero>Ý tưởng đẹp.<br /><em>Dấu ấn riêng.</em></h1>
-          <p className="hero-description" data-hero>Mỗi thương hiệu có một câu chuyện.<br />Nét giúp câu chuyện ấy có hình hài —<br className="desktop-break" /> bằng thiết kế, bằng cảm xúc, bằng dấu ấn.</p>
-          <div className="hero-actions" data-hero><a className="button button-blue" href="#du-an">Khám phá dự án <span aria-hidden="true">↗</span></a><a className="text-link" href="#lien-he">Bắt đầu với một ý tưởng</a></div>
-          <div className="hero-caption" data-hero><span className="caption-line" /><span>Độc lập trong tư duy.<br />Tỉ mỉ trong từng nét.</span></div>
-        </div>
-        <div className="hero-visual" data-hero><span className="art-index">FIG. 01 — THE ART OF MAKING</span><img className="hero-art" src="/images/hero.svg" alt="Minh họa hoa hình cầu bằng các nét khắc màu cobalt, trên một đế kiến trúc" width="680" height="760" fetchPriority="high" /><div className="hero-seal"><Magnet disabled={!magnetEnabled} padding={24} magnetStrength={8} activeTransition="transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)" inactiveTransition="transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)"><a href="#ve-net" aria-label="Khám phá tinh thần Nét"><span>THIẾT KẾ CÓ</span><b aria-hidden="true">✳</b><span>CHỦ ĐÍCH</span></a></Magnet></div><span className="art-note">Một ý tưởng. Vô vàn khả năng.</span></div>
-      </section>
-      <div className="discipline-band section-wrap" aria-label="Lĩnh vực sáng tạo"><span>Nhận diện thương hiệu</span><i aria-hidden="true">✳</i><span>Thiết kế website</span><i aria-hidden="true">✳</i><span>Minh họa & ấn phẩm</span><a href="#du-an" aria-label="Cuộn đến các dự án">↓</a></div>
-      <Portfolio />
-      <section id="ve-net" className="about-section section-wrap" aria-labelledby="about-title">
-        <div data-reveal><p className="eyebrow">02 / Tinh thần Nét</p><p className="about-side">Tò mò.<br />Có chủ đích.<br />Luôn còn một nét mới.</p></div>
-        <div className="about-copy" data-reveal><h2 id="about-title">Thiết kế tốt bắt đầu<br />bằng <em>một câu hỏi đúng.</em></h2><p>Nét là concept cho một studio sáng tạo độc lập. Một nơi dành cho những thương hiệu muốn tìm tiếng nói riêng — rõ ràng về ý tưởng, tinh tế trong thể hiện.</p><p>Chúng tôi tin vào sự giản dị có chiều sâu. Mỗi khoảng trắng, mỗi đường nét và mỗi chuyển động đều cần một lý do để hiện diện.</p><a className="text-link" href="#dich-vu">Khám phá cách Nét làm việc <span aria-hidden="true">↗</span></a></div>
-      </section>
-      <section id="dich-vu" className="services-section section-wrap" aria-labelledby="services-title">
-        <div className="section-heading" data-reveal><div><p className="eyebrow">03 / Chúng ta có thể tạo gì?</p><h2 id="services-title">Những điều<br /><em>Nét làm.</em></h2></div><p className="section-note">Một ngôn ngữ nhất quán.<br />Từ ý tưởng đến mọi điểm chạm.</p></div>
-        <div className="service-ledger">{services.map(([number, name, subtitle, description]) => <details key={number}><summary><span className="service-number">{number}</span><h3>{name}</h3><span className="service-subtitle">{subtitle}</span><span className="service-plus" aria-hidden="true">+</span></summary><div className="service-description"><p>{description}</p><a className="text-link" href="#lien-he">Phác thảo brief của bạn <span aria-hidden="true">↗</span></a></div></details>)}</div>
-      </section>
-      <BriefForm />
-    </main>
-    <footer className="site-footer section-wrap"><a className="footer-wordmark" href="#noi-dung">nét<span aria-hidden="true">✳</span></a><div className="footer-bottom"><p>Ý tưởng đẹp. Dấu ấn riêng.</p><span>Concept studio · 2026</span><a href="#noi-dung">Về đầu trang ↑</a></div></footer>
-  </div>;
+  function openContent(event) {
+    const anchor = event.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    const next = articles.find(article => article.href === href) || information[href?.slice(1)];
+    if (!next) return;
+    event.preventDefault();
+    trigger.current = anchor;
+    setEntry(next);
+  }
+
+  function closeContent() {
+    setEntry(null);
+    trigger.current?.focus();
+  }
+
+  function downloadNote(email) {
+    const text = createBrief({ name: 'Ghi chú Nét Studio', email, service: 'Nhận diện', description: 'Concept studio sáng tạo với nhận diện thương hiệu, website, minh họa và ấn phẩm.' });
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'net-studio-ghi-chu.txt';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  const mark = <Magnet disabled={!magnetEnabled} padding={12} magnetStrength={12} activeTransition="transform .2s cubic-bezier(.23,1,.32,1)" inactiveTransition="transform .2s cubic-bezier(.23,1,.32,1)"><EngravedMark /></Magnet>;
+
+  return <div ref={root} onClick={openContent} className="net-app"><a className="skip-link" href="#noi-dung">Đến nội dung chính</a><div className="reading-progress" aria-hidden="true" /><CobaltToileLanding {...studioContent} logo={mark} navigate={navigate} onSubscribe={downloadNote} contactContent={<BriefForm />} /><ContentDialog entry={entry} onClose={closeContent} /></div>;
 }
